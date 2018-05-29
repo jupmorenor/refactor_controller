@@ -24,6 +24,7 @@ def reemplazo(linea_actual, flags_linea, numero_linea_tope, archivo_linea, reemp
         #print i, ":", co
         if i in archivo_linea:
             archivo_linea = co
+            _logger.info(" Linea {0}: ## {1} ##: {2} -> Refactor".format(linea_actual, reemplazo.keys()[0],i,co ))
     return archivo_linea, True, flags_linea
 
 def escribir_archivo_reemplazo(nombre_archivo, lineas):
@@ -91,7 +92,9 @@ def main():
     # Recorrer Archivos
     for archivo in listdir(options.file_route):
         ruta_archivo =  options.file_route + "/" + archivo
-        _logger.info("################################# {0}".format(ruta_archivo))
+        _logger.info("#####################################################")
+        _logger.info("######## {0}".format(ruta_archivo))
+        _logger.info("#####################################################")
 
         with open(ruta_archivo) as f:
             lineas = f.readlines()
