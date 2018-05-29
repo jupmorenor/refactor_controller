@@ -1,0 +1,9 @@
+*~
+.~*
+*.pyc
+*.swp
+*.swo
+.project
+.pydevproject
+.settings/
+openerp-server.conf

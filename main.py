@@ -146,7 +146,7 @@ def main():
                 liena_actual += 1
         f.close()
         #Escritura de las Cambios
-        escribir_archivo_reemplazo(archivo, new_fiel)
+        escribir_archivo_reemplazo(ruta_archivo, new_fiel)
 
 if __name__ == '__main__':
     main()
