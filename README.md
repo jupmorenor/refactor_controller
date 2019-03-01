@@ -1,10 +1,14 @@
 # refactor_controller
 
-Este proyecto permite refactorizar los métodos POST, GETONE, GETALL, PUT, DELETE, de los controladores de una API generada por el Framework Beego.
+Este proyecto es un script desarrollado en python 2.7 para realizar los ajustes de los micro servicios desarrolladon en el framework Beego de forma masiva y automática.
 
-Especifica el código de estatus de la respuesta a cada uno de los métodos y siempre retorna un JSON.
+Refactoriza los métodos POST, GETONE, GETALL, PUT, DELETE, en los controladores de una API hecha en Beego; especifican el [código de estado HTTP](https://es.wikipedia.org/wiki/Anexo:C%C3%B3digos_de_estado_HTTP) de cada solicitud y retornando siempre un JSON.
+
+la única restricción que existe, es que **solo realiza los ajustes en micro servicios que nos se han personalizado o modificado en sus líneas**. 
+
 
 A la izquierda el método por defecto en el Framewrok a la derecha el refactor
+
 
 ### POST
 ![Refactor Metodo Post](/images/post.png)
