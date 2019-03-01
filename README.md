@@ -2,7 +2,7 @@
 
 Este proyecto es un script desarrollado en python 2.7 para realizar los ajustes de los micro servicios desarrollados en el framework Beego de forma masiva y automática.
 
-Refactoriza los métodos POST, GETONE, GETALL, PUT, DELETE, en los controladores de una API; especificando el [código de estado HTTP](https://es.wikipedia.org/wiki/Anexo:C%C3%B3digos_de_estado_HTTP) de cada solicitud y retornando siempre un JSON.
+Refactoriza los métodos POST, GETONE, GETALL, PUT, DELETE, en los controladores de una API; especificando el [código de estado HTTP](https://es.wikipedia.org/wiki/Anexo:C%C3%B3digos_de_estado_HTTP) de cada solicitud y retornando siempre un JSON. Esto conforme a los estandares de la Oficina Asesora de Sistemas.
 
 la única restricción que existe, es que **solo realiza los ajustes en micro servicios que nos se han personalizado o modificado en sus líneas**.
 
