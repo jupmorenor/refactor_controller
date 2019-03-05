@@ -27,19 +27,23 @@ A la izquierda el método por defecto en el Framewrok a la derecha el refactor
 
 ## Ejecutar Script
 
-Clonamos este repositorio
+- Clonar repositorio
 
-    git clone https://github.com/jotavargas/refactor_controller.git
+      git clone https://github.com/jotavargas/refactor_controller.git
 
-Ingresamos al proyecto para ejecutar main.py
+- Ingresar al proyecto para ejecutar main.py
 
-    cd refactor_controller
+      cd refactor_controller
 
-Ejecutamos Script
+- Ejecutar Script
 
-    # Ejecutar con python 2.7
-    python main.py -F ruta_controladores_del_api_a_refactoring
+      # Ejecutar con python 2.7
+      python main.py -F ruta_controladores_del_api_a_refactoring
 
+- Indentar Controladores *.go
+
+      cd ruta_controladores_del_api_a_refactoring
+      gofmt -w *.go
 
 ## Licencia
 

@@ -54,38 +54,38 @@ def main():
     reemplazos_post = {
         "@Title Post": {
             "@Failure 403 body is empty": "// @Failure 400 the request contains incorrect syntax\n",
-            "c.Data[\"json\"] = err.Error()": "\t\t\tbeego.Error(err)\n\t\t\tc.Abort(\"400\")\n"
+            "c.Data[\"json\"] = err.Error()": "beego.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"code\": \"000\", \"body\": err.Error(), \"type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"400\")\n"
         },
     }
 
     reemplazos_get_one = {
         "@Title Get One": {
             "@Failure 403 :id is empty": "// @Failure 404 not found resource\n",
-            "c.Data[\"json\"] = err.Error()": "\t\tbeego.Error(err)\n\t\tc.Abort(\"404\")\n"
+            "c.Data[\"json\"] = err.Error()": "beego.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"code\": \"000\", \"body\": err.Error(), \"type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"404\")\n"
         },
     }
 
     reemplazos_get_all = {
         "@Title Get All": {
             "@Failure 403": "// @Failure 404 not found resource\n",
-            "c.Data[\"json\"] = err.Error()": "\t\tbeego.Error(err)\n\t\tc.Abort(\"404\")\n",
-            "c.Data[\"json\"] = l": "\t\tif l == nil {\n\t\t\tl = append(l, map[string]interface{}{})\n\t\t}\n\t\tc.Data[\"json\"] = l\n",
+            "c.Data[\"json\"] = err.Error()": "beego.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"code\": \"000\", \"body\": err.Error(), \"type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"404\")\n",
+            "c.Data[\"json\"] = l": "if l == nil {\n l = append(l, map[string]interface{}{})\n }\n c.Data[\"json\"] = l\n",
         },
     }
 
     reemplazos_put = {
         "@Title Put": {
             "@Failure 403 :id is not int": "// @Failure 400 the request contains incorrect syntax\n",
-            "c.Data[\"json\"] = err.Error()": "\t\t\tbeego.Error(err)\n\t\t\tc.Abort(\"400\")\n",
-            "c.Data[\"json\"] = \"OK\"": "\t\t\tc.Data[\"json\"] = v\n",
+            "c.Data[\"json\"] = err.Error()": "beego.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"code\": \"000\", \"body\": err.Error(), \"type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"400\")\n",
+            "c.Data[\"json\"] = \"OK\"": "c.Data[\"json\"] = v\n",
         },
     }
 
     reemplazos_delete = {
         "@Title Delete": {
             "@Failure 403 id is empty": "// @Failure 404 not found resource\n",
-            "c.Data[\"json\"] = \"OK\"": "\t\tc.Data[\"json\"] = map[string]interface{}{\"Id\": id}\n",
-            "c.Data[\"json\"] = err.Error()": "\t\tbeego.Error(err)\n\t\tc.Abort(\"404\")\n"
+            "c.Data[\"json\"] = \"OK\"": "c.Data[\"json\"] = map[string]interface{}{\"Id\": id}\n",
+            "c.Data[\"json\"] = err.Error()": "beego.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"code\": \"000\", \"body\": err.Error(), \"type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"404\")\n"
         },
     }
 
