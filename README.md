@@ -45,6 +45,20 @@ A la izquierda el método por defecto en el Framewrok a la derecha el refactor
       cd ruta_controladores_del_api_a_refactoring
       gofmt -w *.go
 
+## Estructura JSON
+
+Obtenemos la siguiente estructura cuando el framework a controlado un error de bd
+
+  ![Json1](/images/json01.png)
+
+Obtenemos este Json cuando es desarrollador ha personalizado el servicio y estructura del error en el atributo development
+
+  ![Json2](/images/json02.png)
+
+Obtenemos este Json cuando ingresamos a una servicio  que no existe
+
+  ![Json3](/images/json03.png)
+
 ## Licencia
 
 This file is part of refactor_controller.
