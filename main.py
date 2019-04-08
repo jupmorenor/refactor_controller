@@ -54,21 +54,21 @@ def main():
     reemplazos_post = {
         "@Title Post": {
             "@Failure 403 body is empty": "// @Failure 400 the request contains incorrect syntax\n",
-            "c.Data[\"json\"] = err.Error()": "beego.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"Code\": \"000\", \"Body\": err.Error(), \"Type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"400\")\n"
+            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"Code\": \"000\", \"Body\": err.Error(), \"Type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"400\")\n"
         },
     }
 
     reemplazos_get_one = {
         "@Title Get One": {
             "@Failure 403 :id is empty": "// @Failure 404 not found resource\n",
-            "c.Data[\"json\"] = err.Error()": "beego.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"Code\": \"000\", \"Body\": err.Error(), \"Type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"404\")\n"
+            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"Code\": \"000\", \"Body\": err.Error(), \"Type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"404\")\n"
         },
     }
 
     reemplazos_get_all = {
         "@Title Get All": {
             "@Failure 403": "// @Failure 404 not found resource\n",
-            "c.Data[\"json\"] = err.Error()": "beego.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"Code\": \"000\", \"Body\": err.Error(), \"Type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"404\")\n",
+            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"Code\": \"000\", \"Body\": err.Error(), \"Type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"404\")\n",
             "c.Data[\"json\"] = l": "if l == nil {\n l = append(l, map[string]interface{}{})\n }\n c.Data[\"json\"] = l\n",
         },
     }
@@ -76,7 +76,7 @@ def main():
     reemplazos_put = {
         "@Title Put": {
             "@Failure 403 :id is not int": "// @Failure 400 the request contains incorrect syntax\n",
-            "c.Data[\"json\"] = err.Error()": "beego.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"Code\": \"000\", \"Body\": err.Error(), \"Type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"400\")\n",
+            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"Code\": \"000\", \"Body\": err.Error(), \"Type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"400\")\n",
             "c.Data[\"json\"] = \"OK\"": "c.Data[\"json\"] = v\n",
         },
     }
@@ -85,7 +85,7 @@ def main():
         "@Title Delete": {
             "@Failure 403 id is empty": "// @Failure 404 not found resource\n",
             "c.Data[\"json\"] = \"OK\"": "c.Data[\"json\"] = map[string]interface{}{\"Id\": id}\n",
-            "c.Data[\"json\"] = err.Error()": "beego.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"Code\": \"000\", \"Body\": err.Error(), \"Type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"404\")\n"
+            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"Code\": \"000\", \"Body\": err.Error(), \"Type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"404\")\n"
         },
     }
 
