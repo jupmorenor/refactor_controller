@@ -40,10 +40,11 @@ A la izquierda el método por defecto en el Framewrok a la derecha el refactor
       # Ejecutar con python 2.7
       python main.py -F ruta_controladores_del_api_a_refactoring
 
-- Indentar Controladores *.go
+- Indentar e importar package en Controladores *.go
 
       cd ruta_controladores_del_api_a_refactoring
       gofmt -w *.go
+      goimports -w *.go
 
 ## Estructura JSON
 
