@@ -46,6 +46,62 @@ A la izquierda el método por defecto en el Framewrok a la derecha el refactor
       gofmt -w *.go
       goimports -w *.go
 
+
+## Refactoring API Controllers
+
+Editar el **main.go** de la API a Ajustar. Agregar las plantillas de errores que se encuentran en el repositorio **[utils_oas](https://github.com/udistrital/utils_oas)** de la siguiente forma.
+
+- Importar paquete:
+
+      import (
+        "github.com/udistrital/utils_oas/customerror"
+      )
+
+- Implementación en **func main()**:
+
+      beego.ErrorController(&customerror.CustomErrorController{})
+
+- El **main.go** Lucirá de la siguiente forma:
+
+      package main
+
+      import (
+          "github.com/astaxie/beego"
+          "github.com/astaxie/beego/orm"
+          "github.com/astaxie/beego/plugins/cors"
+          _ "github.com/jotavargas/debug_beego_request/routers"
+          _ "github.com/lib/pq"
+          "github.com/udistrital/utils_oas/customerror"
+      )
+
+      func init() {
+          orm.RegisterDataBase("default", "postgres", "postgres://postgres:postgres@127.0.0.1/test?sslmode=disable")
+      }
+
+      func main() {
+          if beego.BConfig.RunMode == "dev" {
+              beego.BConfig.WebConfig.DirectoryIndex = true
+              beego.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
+          }
+
+          beego.InsertFilter("*", beego.BeforeRouter, cors.Allow(&cors.Options{
+              AllowOrigins: []string{"*"},
+              AllowMethods: []string{"PUT", "PATCH", "GET", "POST", "OPTIONS", "DELETE"},
+              AllowHeaders: []string{"Origin", "x-requested-with",
+                  "content-type",
+                  "accept",
+                  "origin",
+                  "authorization",
+                  "x-csrftoken"},
+              ExposeHeaders:    []string{"Content-Length"},
+              AllowCredentials: true,
+          }))
+          beego.ErrorController(&customerror.CustomErrorController{})
+          beego.Run()
+      }
+
+
+
 ## Estructura JSON
 
 Obtenemos la siguiente estructura cuando el framework a controlado un error de bd
