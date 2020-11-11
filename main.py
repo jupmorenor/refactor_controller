@@ -54,38 +54,40 @@ def main():
     reemplazos_post = {
         "@Title Post": {
             "@Failure 403 body is empty": "// @Failure 400 the request contains incorrect syntax\n",
-            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"Code\": \"000\", \"Body\": err.Error(), \"Type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"400\")\n"
+            "c.Data[\"json\"] = v": "c.Data[\"json\"] = map[string]interface{}{\"Success\": true, \"Status\": \"201\", \"Message\": \"Registration successful\", \"Data\": v}",
+            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\nc.Data[\"mesaage\"] = \"Error service POST: The request contains an incorrect data type or an invalid parameter\"\nc.Abort(\"400\")\n"
         },
     }
 
     reemplazos_get_one = {
         "@Title Get One": {
             "@Failure 403 :id is empty": "// @Failure 404 not found resource\n",
-            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"Code\": \"000\", \"Body\": err.Error(), \"Type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"404\")\n"
+            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\nc.Data[\"mesaage\"] = \"Error service GetOne: The request contains an incorrect parameter or no record exists\"\n c.Abort(\"404\")\n",
+            "c.Data[\"json\"] = v": "c.Data[\"json\"] = map[string]interface{}{\"Success\": true, \"Status\": \"200\", \"Message\": \"Request successful\", \"Data\": v}"
         },
     }
 
     reemplazos_get_all = {
         "@Title Get All": {
             "@Failure 403": "// @Failure 404 not found resource\n",
-            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"Code\": \"000\", \"Body\": err.Error(), \"Type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"404\")\n",
-            "c.Data[\"json\"] = l": "if l == nil {\n l = append(l, map[string]interface{}{})\n }\n c.Data[\"json\"] = l\n",
+            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\nc.Data[\"mesaage\"] = \"Error service GetAll: The request contains an incorrect parameter or no record exists\"\n c.Abort(\"404\")\n",
+            "c.Data[\"json\"] = l": "if l == nil {\nl = append(l, map[string]interface{}{})\n}\nc.Data[\"json\"] = map[string]interface{}{\"Success\": true, \"Status\": \"200\", \"Message\": \"Request successful\", \"Data\": l}\n",
         },
     }
 
     reemplazos_put = {
         "@Title Put": {
             "@Failure 403 :id is not int": "// @Failure 400 the request contains incorrect syntax\n",
-            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"Code\": \"000\", \"Body\": err.Error(), \"Type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"400\")\n",
-            "c.Data[\"json\"] = \"OK\"": "c.Data[\"json\"] = v\n",
+            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\nc.Data[\"mesaage\"] = \"Error service Put: The request contains an incorrect data type or an invalid parameter\"\n c.Abort(\"400\")\n",
+            "c.Data[\"json\"] = \"OK\"": "c.Data[\"json\"] = map[string]interface{}{\"Success\": true, \"Status\": \"200\", \"Message\": \"Update successful\", \"Data\": v}\n",
         },
     }
 
     reemplazos_delete = {
         "@Title Delete": {
             "@Failure 403 id is empty": "// @Failure 404 not found resource\n",
-            "c.Data[\"json\"] = \"OK\"": "c.Data[\"json\"] = map[string]interface{}{\"Id\": id}\n",
-            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\n //c.Data[\"development\"] = map[string]interface{}{\"Code\": \"000\", \"Body\": err.Error(), \"Type\": \"error\"}\nc.Data[\"system\"] = err\n c.Abort(\"404\")\n"
+            "c.Data[\"json\"] = \"OK\"": "d := map[string]interface{}{\"Id\": id}\nc.Data[\"json\"] = map[string]interface{}{\"Success\": true, \"Status\": \"200\", \"Message\": \"Delete successful\", \"Data\": d}\n",
+            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\nc.Data[\"mesaage\"] = \"Error service Delete: Request contains incorrect parameter\"\n c.Abort(\"404\")\n"
         },
     }
 
