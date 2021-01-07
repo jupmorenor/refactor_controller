@@ -9,7 +9,7 @@ La única restricción que existe, es que **solo realiza los ajustes en micro se
 
 ### 1 Configurar paquete utils_oas
 
-Se debe implementar las plantilla de error que se encuentra en [utils_oas](https://github.com/udistrital/utils_oas) como se indica acontinuación.
+Se debe implementar las plantilla de error que se encuentra en [utils_oas](https://github.com/udistrital/utils_oas) como se indica a continuación.
 
 ##### 1.1. Importar paquete:
 Para esto Editar el `main.go` de la API a Ajustar.
@@ -83,7 +83,7 @@ python2.7 main.py -F ruta_controladores_del_api_a_refactoring
 #Ejemplo:
 python2.7 main.py -F /home/jjvargass/go/src/github.com/udistrital/api_financiera/controllers
 ```
-##### 2.1.3 Indentar e importar package en Controladores *.go
+##### 2.3 Indentar e importar package en Controladores *.go
 ```bash
 cd ruta_controladores_del_api_a_refactoring
 gofmt -w *.go
