@@ -9,16 +9,16 @@ La única restricción que existe, es que **solo realiza los ajustes en micro se
 
 ### 1 Configurar paquete utils_oas
 
-#### 1.1 Implementar las plantilla de error que se encuentra en [utils_oas](https://github.com/udistrital/utils_oas)
+Se debe implementar las plantilla de error que se encuentra en [utils_oas](https://github.com/udistrital/utils_oas) como se indica acontinuación.
 
-##### 1.1.1 Importar paquete:
+##### 1.1. Importar paquete:
 Para esto Editar el `main.go` de la API a Ajustar.
 ```golang
 import (
   "github.com/udistrital/utils_oas/customerrorv2"
 )
 ```
-##### 1.1.2 Implementación en `func main()`
+##### 1.2 Implementación en `func main()`
 ```golang
 beego.ErrorController(&customerrorv2.CustomErrorController{})
 ```
@@ -65,11 +65,11 @@ func main() {
 
 ### 2 Ejecución de Script para Refactorizar los Controladores
 
-##### 2.1.1  Clonar repositorio
+##### 2.1  Clonar repositorio
 ```golang
 git clone git@github.com:udistrital/refactor_controller.git
 ```
-##### 2.1.2 Ejecución del script
+##### 2.2 Ejecución del script
 ```bash
 #ir al proyecto
 cd refactor_controller
