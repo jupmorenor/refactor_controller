@@ -20,11 +20,11 @@ def reemplazo(linea_actual, flags_linea, numero_linea_tope, archivo_linea, reemp
     '''
     if (linea_actual) > (flags_linea + numero_linea_tope):
         return archivo_linea, False, 0
-    for i, co in reemplazo[reemplazo.keys()[0]].items():
+    for i, co in list(reemplazo[list(reemplazo.keys())[0]].items()):
         #print i, ":", co
         if i in archivo_linea:
             archivo_linea = co
-            _logger.info(" Linea {0}: ## {1} ##: {2} -> Refactor".format(linea_actual, reemplazo.keys()[0],i,co ))
+            _logger.info(" Linea {0}: ## {1} ##: {2} -> Refactor".format(linea_actual, list(reemplazo.keys())[0],i,co ))
     return archivo_linea, True, flags_linea
 
 def escribir_archivo_reemplazo(nombre_archivo, lineas):
@@ -48,21 +48,22 @@ def main():
     _logger.setLevel(int(options.debug))
 
     if not options.file_route:
-        parser.error('Espesifique ruta de los controladores')
+        parser.error('Especifique ruta de los controladores')
 
     # Especificacion de los Cambios por Metodos
     reemplazos_post = {
         "@Title Post": {
             "@Failure 403 body is empty": "// @Failure 400 the request contains incorrect syntax\n",
+            "if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {": "if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {\n v.FechaCreacion = time_bogota.TiempoBogotaFormato()\n v.FechaModificacion = time_bogota.TiempoBogotaFormato()\n",
             "c.Data[\"json\"] = v": "c.Data[\"json\"] = map[string]interface{}{\"Success\": true, \"Status\": \"201\", \"Message\": \"Registration successful\", \"Data\": v}",
-            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\nc.Data[\"mesaage\"] = \"Error service POST: The request contains an incorrect data type or an invalid parameter\"\nc.Abort(\"400\")\n"
+            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\nc.Data[\"message\"] = \"Error service POST: The request contains an incorrect data type or an invalid parameter\"\nc.Abort(\"400\")\n"
         },
     }
 
     reemplazos_get_one = {
         "@Title Get One": {
             "@Failure 403 :id is empty": "// @Failure 404 not found resource\n",
-            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\nc.Data[\"mesaage\"] = \"Error service GetOne: The request contains an incorrect parameter or no record exists\"\n c.Abort(\"404\")\n",
+            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\nc.Data[\"message\"] = \"Error service GetOne: The request contains an incorrect parameter or no record exists\"\n c.Abort(\"404\")\n",
             "c.Data[\"json\"] = v": "c.Data[\"json\"] = map[string]interface{}{\"Success\": true, \"Status\": \"200\", \"Message\": \"Request successful\", \"Data\": v}"
         },
     }
@@ -70,7 +71,7 @@ def main():
     reemplazos_get_all = {
         "@Title Get All": {
             "@Failure 403": "// @Failure 404 not found resource\n",
-            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\nc.Data[\"mesaage\"] = \"Error service GetAll: The request contains an incorrect parameter or no record exists\"\n c.Abort(\"404\")\n",
+            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\nc.Data[\"message\"] = \"Error service GetAll: The request contains an incorrect parameter or no record exists\"\n c.Abort(\"404\")\n",
             "c.Data[\"json\"] = l": "if l == nil {\nl = append(l, map[string]interface{}{})\n}\nc.Data[\"json\"] = map[string]interface{}{\"Success\": true, \"Status\": \"200\", \"Message\": \"Request successful\", \"Data\": l}\n",
         },
     }
@@ -78,7 +79,8 @@ def main():
     reemplazos_put = {
         "@Title Put": {
             "@Failure 403 :id is not int": "// @Failure 400 the request contains incorrect syntax\n",
-            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\nc.Data[\"mesaage\"] = \"Error service Put: The request contains an incorrect data type or an invalid parameter\"\n c.Abort(\"400\")\n",
+            "if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {": "if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {\n v.FechaCreacion = time_bogota.TiempoCorreccionFormato(v.FechaCreacion)\n v.FechaModificacion = time_bogota.TiempoBogotaFormato()\n",
+            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\nc.Data[\"message\"] = \"Error service Put: The request contains an incorrect data type or an invalid parameter\"\n c.Abort(\"400\")\n",
             "c.Data[\"json\"] = \"OK\"": "c.Data[\"json\"] = map[string]interface{}{\"Success\": true, \"Status\": \"200\", \"Message\": \"Update successful\", \"Data\": v}\n",
         },
     }
@@ -87,7 +89,7 @@ def main():
         "@Title Delete": {
             "@Failure 403 id is empty": "// @Failure 404 not found resource\n",
             "c.Data[\"json\"] = \"OK\"": "d := map[string]interface{}{\"Id\": id}\nc.Data[\"json\"] = map[string]interface{}{\"Success\": true, \"Status\": \"200\", \"Message\": \"Delete successful\", \"Data\": d}\n",
-            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\nc.Data[\"mesaage\"] = \"Error service Delete: Request contains incorrect parameter\"\n c.Abort(\"404\")\n"
+            "c.Data[\"json\"] = err.Error()": "logs.Error(err)\nc.Data[\"message\"] = \"Error service Delete: Request contains incorrect parameter\"\n c.Abort(\"404\")\n"
         },
     }
 
@@ -107,51 +109,51 @@ def main():
             flags_put = False
             flags_delete = False
             flags_linea_metodo = 0
-            liena_actual = 1
-            new_fiel = []
+            linea_actual = 1
+            new_field = []
             #Recorrer Archivo por salto de lineas
             for linea in lineas:
                 #Validacion Post
-                if reemplazos_post.keys()[0] in linea:
+                if list(reemplazos_post.keys())[0] in linea:
                     flags_post = True
-                    flags_linea_metodo = liena_actual
+                    flags_linea_metodo = linea_actual
                 if flags_post:
-                    linea, flags_post, flags_linea_metodo = reemplazo(liena_actual,flags_linea_metodo, 20, linea, reemplazos_post)
+                    linea, flags_post, flags_linea_metodo = reemplazo(linea_actual, flags_linea_metodo, 20, linea, reemplazos_post)
 
                 #Validacion GetOne
-                if reemplazos_get_one.keys()[0] in linea:
+                if list(reemplazos_get_one.keys())[0] in linea:
                     flags_get_one = True
-                    flags_linea_metodo = liena_actual
+                    flags_linea_metodo = linea_actual
                 if flags_get_one:
-                    linea, flags_get_one, flags_linea_metodo = reemplazo(liena_actual,flags_linea_metodo, 16, linea, reemplazos_get_one)
+                    linea, flags_get_one, flags_linea_metodo = reemplazo(linea_actual, flags_linea_metodo, 16, linea, reemplazos_get_one)
 
                 #Validacion GetAll
-                if reemplazos_get_all.keys()[0] in linea:
+                if list(reemplazos_get_all.keys())[0] in linea:
                     flags_get_all = True
-                    flags_linea_metodo = liena_actual
+                    flags_linea_metodo = linea_actual
                 if flags_get_all:
-                    linea, flags_get_all, flags_linea_metodo = reemplazo(liena_actual,flags_linea_metodo, 60, linea, reemplazos_get_all)
+                    linea, flags_get_all, flags_linea_metodo = reemplazo(linea_actual, flags_linea_metodo, 60, linea, reemplazos_get_all)
 
                 #Validacion Put
-                if reemplazos_put.keys()[0] in linea:
+                if list(reemplazos_put.keys())[0] in linea:
                     flags_put = True
-                    flags_linea_metodo = liena_actual
+                    flags_linea_metodo = linea_actual
                 if flags_put:
-                    linea, flags_put, flags_linea_metodo = reemplazo(liena_actual,flags_linea_metodo, 21, linea, reemplazos_put)
+                    linea, flags_put, flags_linea_metodo = reemplazo(linea_actual, flags_linea_metodo, 21, linea, reemplazos_put)
 
                 #Validacion Delete
-                if reemplazos_delete.keys()[0] in linea:
+                if list(reemplazos_delete.keys())[0] in linea:
                     flags_delete = True
-                    flags_linea_metodo = liena_actual
+                    flags_linea_metodo = linea_actual
                 if flags_delete:
-                    linea, flags_delete, flags_linea_metodo = reemplazo(liena_actual,flags_linea_metodo, 15, linea, reemplazos_delete)
+                    linea, flags_delete, flags_linea_metodo = reemplazo(linea_actual, flags_linea_metodo, 15, linea, reemplazos_delete)
                 # Construir Nuevo Archivo
                 #print linea
-                new_fiel.append(linea)
-                liena_actual += 1
+                new_field.append(linea)
+                linea_actual += 1
         f.close()
         #Escritura de las Cambios
-        escribir_archivo_reemplazo(ruta_archivo, new_fiel)
+        escribir_archivo_reemplazo(ruta_archivo, new_field)
 
 if __name__ == '__main__':
     main()

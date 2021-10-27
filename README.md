@@ -1,5 +1,5 @@
 # refactor_controller
-Este proyecto es un script desarrollado en python 2.7 para realizar ajustes en la estructura de respuesta JSON y `status code` de los micro servicios desarrollados en el framework `Beego` de forma masiva y automática.
+Este proyecto es un script actualizado a python 3.9 para realizar ajustes en la estructura de respuesta JSON y `status code` de los micro servicios desarrollados en el framework `Beego` de forma masiva y automática. En este caso se incluye el formateo de los campos fecha_creacion y fecha_modificacion para que no pierdan consistencia usando la libreria time_bogota de [utils_oas](https://github.com/udistrital/utils_oas).
 
 Refactoriza los métodos POST, GETONE, GETALL, PUT, DELETE, en los controladores de una API; especificando el [código de estado HTTP](https://es.wikipedia.org/wiki/Anexo:C%C3%B3digos_de_estado_HTTP) de cada solicitud y retornando siempre un JSON. Esto conforme a los estandares de la Oficina Asesora de Sistemas.
 
@@ -88,6 +88,18 @@ python2.7 main.py -F /home/jjvargass/go/src/github.com/udistrital/api_financiera
 cd ruta_controladores_del_api_a_refactoring
 gofmt -w *.go
 goimports -w *.go
+```
+
+##### 2.4 Ajustar el tipo de dato en fecha_creacion y fecha_modificacion
+
+Para finalizar lo que corresponde a los campos de fecha, es necesario que en los modelos el tipo de dato de estos campos sea string para su correcta inserción y modificación en la base de datos.
+
+```golang
+
+type ModeloEjemplo struct {
+	FechaCreacion     string `orm:"column(fecha_creacion);type(timestamp without time zone);null"`
+	FechaModificacion string `orm:"column(fecha_modificacion);type(timestamp without time zone);null"`
+}
 ```
 
 ### 3 Conparación de cambios (Antes y Despues)
