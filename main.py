@@ -72,7 +72,7 @@ def main():
         "@Title Get All": {
             "@Failure 403": "// @Failure 404 not found resource\n",
             "c.Data[\"json\"] = err.Error()": "logs.Error(err)\nc.Data[\"mesaage\"] = \"Error service GetAll: The request contains an incorrect parameter or no record exists\"\n c.Abort(\"404\")\n",
-            "c.Data[\"json\"] = l": "if l == nil {\nl = append(l, map[string]interface{}{})\n}\nc.Data[\"json\"] = map[string]interface{}{\"Success\": true, \"Status\": \"200\", \"Message\": \"Request successful\", \"Data\": l}\n",
+            "c.Data[\"json\"] = l": "if l == nil {\nl = []interface{}{})\n}\nc.Data[\"json\"] = map[string]interface{}{\"Success\": true, \"Status\": \"200\", \"Message\": \"Request successful\", \"Data\": l}\n",
         },
     }
 
